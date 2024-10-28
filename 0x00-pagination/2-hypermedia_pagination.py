@@ -47,7 +47,7 @@ class Server:
         """
         Returns dictionary for hypermedia pagination
         """
-        data = get_page(page, page_size)
+        data = self.get_page(page, page_size)
         size = len(data)
         hyper = {
                     "page_size": size,
