@@ -5,7 +5,7 @@ Deletion-resilient hypermedia pagination
 
 
 import csv
-from typing import List
+from typing import List, Dict
 
 
 class Server:
@@ -23,7 +23,7 @@ class Server:
         Cached dataset
         """
         if self.__dataset is None:
-            with open(DATA_FILE) as f:
+            with open(self.DATA_FILE) as f:
                 reader = csv.reader(f)
                 dataset = [row for row in reader]
 
@@ -44,19 +44,19 @@ class Server:
 
         return (self.__indexed_dataset)
 
-    def get_hyper(self, index: int = None, page_size: int = 10) -> Dict:
+    def get_hyper_index(self, index: int = None, page_size: int = 10) -> Dict:
         """
         Return deletion-resilient hyper pagination dict
         """
         if index is None:
             index = 0
-        assert 0 <= index >= len(self.indexed_dataset())
+        assert 0 <= index < len(self.indexed_dataset())
 
         indexed_data = self.indexed_dataset()
         data = []
         start = index
         for i in range(page_size):
-            if start in index_data:
+            if start in indexed_data:
                 data.append(indexed_data[start])
                 start += 1
 
