@@ -48,14 +48,14 @@ class Server:
         Returns dictionary for hypermedia pagination
         """
         data = self.get_page(page, page_size)
-        size = len(data)
+        size = len(self.__dataset) // page_size
         hyper = {
-                    "page_size": size,
+                    "page_size": len(data),
                     "page":  page,
                     "data": data,
-                    "next_page": page + 1 if page != size else None,
+                    "next_page": page + 1 if page < size else None,
                     "prev_page": page - 1 if page != 1 else None,
-                    "total_pages": len(self.__dataset)
+                    "total_pages": size
                 }
 
         return (hyper)
