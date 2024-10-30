@@ -3,12 +3,20 @@
 FIFO based caching module
 """
 from base_caching import BaseCaching
+from collections import OrderedDict
 
 
 class FifoCache(BaseCaching):
     """
     The class for FIFO based caching implementation
     """
+
+    def __init__(self):
+        """
+        Initi
+        """
+        super().__init__()
+        self.cache_data = OrderedDict()
 
     def put(self, key, item):
         """
@@ -17,9 +25,8 @@ class FifoCache(BaseCaching):
 
         if key and item:
             if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                first_key = list(self.cache_data.keys())[-1]
-                print(f"DISCARD: {last_key}")
-                del self.cache_data[first_key]
+                first_key, v = self.cache_data.popitem(False)
+                print(f"DISCARD: {first_key}")
 
             self.cache_data[key] = item
 
