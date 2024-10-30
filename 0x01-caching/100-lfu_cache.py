@@ -29,6 +29,7 @@ class LFUCache(BaseCaching):
             return
 
         if key in self.cache_data:
+            # Update existing item and its frequency
             self.cache_data[key] = item
             self._update_frequency(key)
             return
@@ -36,15 +37,20 @@ class LFUCache(BaseCaching):
         if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
             self._remove_lfu()
 
+        # Add the new item to the cache
         self.cache_data[key] = item
         self.freq_map[key] = 1
         self.usage_order.append(key)
         self.min_freq = 1
 
     def get(self, key):
+        """
+        Get item by key
+        """
         if key is None or key not in self.cache_data:
             return None
 
+        # Update the frequency of the accessed key
         self._update_frequency(key)
         return self.cache_data[key]
 
@@ -52,9 +58,10 @@ class LFUCache(BaseCaching):
         """
         Update the frequency of the given key.
         """
-
+        # Increment the frequency
         self.freq_map[key] += 1
 
+        # Update min_freq if necessary
         freq = self.freq_map[key]
         if freq > self.min_freq:
             self.min_freq = freq
@@ -63,9 +70,9 @@ class LFUCache(BaseCaching):
         """
         Remove the least frequently used item.
         """
-        lfu_keys = [key for key, freq in self.freq_map.items()
-                    if freq == self.min_freq]
+        lfu_keys = [key for key, freq in self.freq_map.items() if freq == self.min_freq]
 
+        # If there are multiple LFU items, use LRU to remove one
         lfu_key = None
         for key in self.usage_order:
             if key in lfu_keys:
