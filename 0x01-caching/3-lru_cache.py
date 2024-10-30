@@ -3,6 +3,8 @@
 Least Recentky Used caching
 """
 
+from base_cache import BaseCaching
+
 class LRUCache(BaseCaching):
     """
     LRU Cache
