@@ -2,7 +2,7 @@
 """
 Basic Caching module
 """
-BaseCaching = __import__("base_caching.py").BaseCaching
+from base_caching import BaseCaching
 
 
 class BasicCache(BaseCaching):
@@ -11,12 +11,6 @@ class BasicCache(BaseCaching):
     - constants of the caching systems
     - where the data are stored (in a dictionary)
     """
-    def __init__(self):
-        """
-        Initialize
-        """
-        self.cache_data = {}
-        super().__init__(self)
 
     def put(self, key, item):
         """
