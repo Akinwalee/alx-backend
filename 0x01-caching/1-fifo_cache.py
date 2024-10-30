@@ -2,7 +2,7 @@
 """
 FIFO based caching module
 """
-BaseCaching = __import__("0-baseic_cache").BaseCaching
+BaseCaching = __import__("base_caching.py").BaseCaching
 
 
 class FifoCache(BaseCaching):
