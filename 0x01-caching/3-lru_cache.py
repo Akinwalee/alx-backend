@@ -3,7 +3,7 @@
 Least Recentky Used caching
 """
 
-from base_cache import BaseCaching
+from base_caching import BaseCaching
 
 class LRUCache(BaseCaching):
     """
