@@ -6,10 +6,12 @@ Least Recentky Used caching
 
 from base_caching import BaseCaching
 
-class LRUCache(BaseCaching):
+
+class MRUCache(BaseCaching):
     """
-    LRU Cache
+    MRU Caching
     """
+
     def __init__(self):
         """
         Initialize
@@ -19,9 +21,8 @@ class LRUCache(BaseCaching):
 
     def put(self, key, item):
         """
-        Add a key, item pair to the cache
+        Add key, item pair to cache
         """
-
         if key is None or item is None:
             return
 
@@ -29,18 +30,17 @@ class LRUCache(BaseCaching):
             self.order.remove(key)
 
         if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
-            lru_key = self.order.pop(0)
-            del self.cache_data[lru_key]
-            print(f"DISCARD: {lru_key}")
+            mru_key = self.order.pop()
+            del self.cache_data[mru_key]
+            print(f"DISCARD: {mru_key}")
 
         self.cache_data[key] = item
         self.order.append(key)
 
     def get(self, key):
         """
-        Retrieve an item with its key
+        Retrieve item based on key
         """
-
         if key is None or key not in self.cache_data:
             return None
 
