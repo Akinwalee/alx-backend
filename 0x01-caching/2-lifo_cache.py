@@ -22,12 +22,15 @@ class LIFOCache(BaseCaching):
         """
         Put an item into the cache dict
         """
+        if not key or not item:
+            return
+        if key not in self.cache_data:
+            if len(self.cache_data) + 1 > BaseCaching.MAX_ITEMS:
+                last_key, v = self.cache_data.popitem(True)
+                print(f"DISCARD: {last_key}")
+        self.cache_data[key] = item
+        self.cache_data.move_to_end(key, last=True)
 
-        if key is not None and item is not None:
-            self.cache_data[key] = item
-            if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                first_key, v = self.cache_data.popitem(True)
-                print(f"DISCARD: {first_key}")
 
     def get(self, key):
         """
