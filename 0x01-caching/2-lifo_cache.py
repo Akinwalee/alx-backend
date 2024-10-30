@@ -6,7 +6,7 @@ from base_caching import BaseCaching
 from collections import OrderedDict
 
 
-class FIFOCache(BaseCaching):
+class LIFOCache(BaseCaching):
     """
     The class for FIFO based caching implementation
     """
@@ -23,10 +23,10 @@ class FIFOCache(BaseCaching):
         Put an item into the cache dict
         """
 
-        if key and item:
+        if key is not None and item is not None:
             self.cache_data[key] = item
             if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-                first_key, v = self.cache_data.popitem(False)
+                first_key, v = self.cache_data.popitem(True)
                 print(f"DISCARD: {first_key}")
 
     def get(self, key):
