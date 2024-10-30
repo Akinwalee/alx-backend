@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Least Recentky Used caching
+Most Recently Used caching
 """
 
 
