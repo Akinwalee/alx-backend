@@ -19,7 +19,7 @@ class BaseCaching():
 
         self.cache_data = {}
 
-    def print_caches(self):
+    def print_cache(self):
         """
         Print the cache
         """
