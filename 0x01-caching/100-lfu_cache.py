@@ -63,17 +63,17 @@ class LFUCache(BaseCaching):
         """
         Remove the least frequently used item.
         """
-        lfu_keys = [key for key, freq in self.freq_map.items() if freq == self.min_freq]
+        lfu_keys = [key for key, freq in self.freq_map.items()
+                    if freq == self.min_freq]
 
         lfu_key = None
         for key in self.usage_order:
             if key in lfu_keys:
                 lfu_key = key
                 break
-        
+
         if lfu_key:
             del self.cache_data[lfu_key]
             del self.freq_map[lfu_key]
             self.usage_order.remove(lfu_key)
             print(f"DISCARD: {lfu_key}")
-
