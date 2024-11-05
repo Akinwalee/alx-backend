@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+
+
+from flask import Flask, render_template
+from flask_babel import Babel
+
+
+app = Flask(__name__)
+babel = Babel(app)
+
+
+
+class Config():
+    """
+    Language configuration
+    """
+    LANGUAGES = ["en", "fr"]
+
+app.route("/")
+def index():
+    """
+    The base route
+    """
+    render_template("0-index")
