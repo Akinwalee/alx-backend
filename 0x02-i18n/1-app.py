@@ -11,7 +11,7 @@ babel = Babel(app)
 
 
 
-class Config():
+class Config:
     """
     Language configuration
     """
