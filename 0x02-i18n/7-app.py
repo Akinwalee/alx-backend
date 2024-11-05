@@ -41,7 +41,35 @@ def index():
     """
     The base route
     """
-    return render_template('5-index.html')
+    return render_template('7-index.html')
+
+
+def get_timezone():
+    """
+    1. Check for timezone in URL parameters
+    """
+    timezone = request.args.get('timezone')
+    if timezone:
+        try:
+            # Validate the time zone
+            pytz.timezone(timezone)
+            return timezone
+        except UnknownTimeZoneError:
+            pass
+
+    # 2. Check for user's timezone
+    if g.user and g.user.get('timezone'):
+        try:
+            # Validate user's time zone
+            pytz.timezone(g.user['timezone'])
+            return g.user['timezone']
+        except UnknownTimeZoneError:
+            pass
+
+    # 3. Fall back to the default timezone
+    return app.config['BABEL_DEFAULT_TIMEZONE']
+
+babel.timezoneselector(get_timezone)
 
 @babel.localeselector
 def get_locale():
@@ -50,6 +78,9 @@ def get_locale():
     """
     if g.user and g.user['locale']:
         return g.user['locale']
+    locale = request.args.get('locale')
+    if locale in app.config['LANGUAGES']:
+        return locale
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 

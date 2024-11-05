@@ -41,7 +41,7 @@ def index():
     """
     The base route
     """
-    return render_template('2-index.html')
+    return render_template('6-index.html')
 
 @babel.localeselector
 def get_locale():
